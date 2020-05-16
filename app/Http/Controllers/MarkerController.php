@@ -58,11 +58,11 @@ class MarkerController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Marker  $marker
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Marker $marker)
     {
-        return response()->json()
+//        return response()->json(DB::table('markers')->where('id', $marker)->first());
     }
 
     /**
@@ -85,6 +85,8 @@ class MarkerController extends Controller
      */
     public function destroy(Marker $marker)
     {
-        //
+        Marker::find($marker)->delete();
+
+        return 204;
     }
 }
