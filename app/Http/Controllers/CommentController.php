@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Marker;
+use App\Comment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class MarkerController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class MarkerController extends Controller
      */
     public function index()
     {
-        return response()->json(Marker::all());
+        return response()->json(Comment::all());
     }
 
     /**
@@ -30,30 +30,30 @@ class MarkerController extends Controller
         // create object
         $infoMessage = (Object) [];
 
-        // checking if this marker was created earlier
-        $validateMarker = DB::table('markers')
+        // checking if this comment was created earlier
+        $validateComments = DB::table('comments')
             ->where([
-                    'owner_id' => $request->owner_id,
-                    'lat' => $request->lat,
-                    'lng' => $request->lng
+                'owner_id' => $request->owner_id,
+                'marker_id' => $request->marker_id,
+                'body' => $request->body
             ])->first();
 
-        // if there is no markers like that
-        if (!isset($validateMarker)) {
-            $marker = new Marker();
+        // if there is no comments like that
+        if (!isset($validateComments)) {
+            $comment = new Comment();
 
-            $marker->owner_id = $request->owner_id;
-            $marker->lat = $request->lat;
-            $marker->lng = $request->lng;
+            $comment->owner_id = $request->owner_id;
+            $comment->marker_id = $request->marker_id;
+            $comment->body = $request->body;
 
-            if ($marker->save()) {
-                $infoMessage->message = 'Marker successfully created';
+            if ($comment->save()) {
+                $infoMessage->message = 'Comment successfully created';
                 return response()->json($infoMessage);
             } else {
                 return response()->view('errors.500', [], 500);
             }
         } else {
-            $infoMessage->message = 'This marker have already been created by you';
+            $infoMessage->message = 'This comment have already been created by you';
             return response()->json($infoMessage);
         }
     }
@@ -61,11 +61,12 @@ class MarkerController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param $id
      * @return JsonResponse
      */
     public function show($id)
     {
-        return response()->json(Marker::findOrFail($id));
+        return response()->json(Comment::findOrFail($id));
     }
 
     /**
@@ -77,14 +78,13 @@ class MarkerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $marker = Marker::findOrFail($id);
+        $comment = Comment::findOrFail($id);
 
-        $marker->lat = $request->lat;
-        $marker->lng = $request->lng;
+        $comment->body = $request->body;
 
-        $marker->save();
+        $comment->save();
 
-        return response()->json((Object) ['message' => 'Marker successfully updated']);
+        return response()->json((Object) ['message' => 'Comment successfully updated']);
     }
 
     /**
@@ -95,8 +95,8 @@ class MarkerController extends Controller
      */
     public function destroy($id)
     {
-        Marker::findOrFail($id)->delete();
+        Comment::findOrFail($id)->delete();
 
-        return response()->json((Object) ['message' => 'Marker successfully deleted']);
+        return response()->json((Object) ['message' => 'Comment successfully destroyed']);
     }
 }

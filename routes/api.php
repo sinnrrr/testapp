@@ -15,11 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// markers api
 Route::get('markers', 'MarkerController@index');
 Route::get('markers/{id}', 'MarkerController@show');
 Route::post('markers', 'MarkerController@store');
-Route::put('markers{id}', 'MarkerController@update');
-Route::delete('markers{id}', 'MarkerController@delete');
+Route::put('markers/{id}', 'MarkerController@update');
+Route::delete('markers/{id}', 'MarkerController@destroy');
+
+// comments api
+Route::get('comments', 'CommentController@index');
+Route::get('comments/{id}', 'CommentController@show');
+Route::post('comments', 'CommentController@store');
+Route::put('comments/{id}', 'CommentController@update');
+Route::delete('comments/{id}', 'CommentController@destroy');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
