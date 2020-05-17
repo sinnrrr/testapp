@@ -15,7 +15,7 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owmer_id')->constrained('user');
+            $table->foreignId('owner_id')->constrained('users');
             $table->foreignId('marker_id')->constrained('markers');
             $table->text('body');
             $table->integer('likes')->unsigned()->default(0);

@@ -27,9 +27,6 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        // create object
-        $infoMessage = (Object) [];
-
         // checking if this comment was created earlier
         $validateComments = DB::table('comments')
             ->where([
@@ -47,14 +44,12 @@ class CommentController extends Controller
             $comment->body = $request->body;
 
             if ($comment->save()) {
-                $infoMessage->message = 'Comment successfully created';
-                return response()->json($infoMessage);
+                return response()->json((object)['message' => 'Comment successfully created']);
             } else {
                 return response()->view('errors.500', [], 500);
             }
         } else {
-            $infoMessage->message = 'This comment have already been created by you';
-            return response()->json($infoMessage);
+            return response()->json((object)['message' => 'This comment has already been created by you'], 418);
         }
     }
 
@@ -84,7 +79,7 @@ class CommentController extends Controller
 
         $comment->save();
 
-        return response()->json((Object) ['message' => 'Comment successfully updated']);
+        return response()->json((object)['message' => 'Comment successfully updated']);
     }
 
     /**
@@ -97,6 +92,6 @@ class CommentController extends Controller
     {
         Comment::findOrFail($id)->delete();
 
-        return response()->json((Object) ['message' => 'Comment successfully destroyed']);
+        return response()->json((object)['message' => 'Comment successfully destroyed']);
     }
 }

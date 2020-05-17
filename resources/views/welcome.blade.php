@@ -43,6 +43,13 @@
         markers = JSON.parse(xhr.responseText);
     }
 
+    function fetchPlaceInfo(marker_id) {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', `/api/places/${marker_id}`, false);
+
+    }
+
     function initMap() {
         let map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 50.7593, lng: 25.3424},
@@ -50,10 +57,18 @@
         });
 
         markers.forEach((element) => {
+            console.log(element);
             let marker = new google.maps.Marker({
                 position: { lat: element.lat, lng: element.lng },
-                map: map,
-                title: 'Hello World!'
+                map: map
+            });
+
+            let infoWindow = new google.maps.InfoWindow({
+                content: `<h1>${element.title}</h1><p>${element.description}</p>`
+            });
+
+            marker.addListener('click', () => {
+                infoWindow.open(map, marker);
             });
         });
     }

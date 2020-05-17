@@ -27,15 +27,12 @@ class MarkerController extends Controller
      */
     public function store(Request $request)
     {
-        // create object
-        $infoMessage = (Object) [];
-
         // checking if this marker was created earlier
         $validateMarker = DB::table('markers')
             ->where([
-                    'owner_id' => $request->owner_id,
-                    'lat' => $request->lat,
-                    'lng' => $request->lng
+                'owner_id' => $request->owner_id,
+                'lat' => $request->lat,
+                'lng' => $request->lng
             ])->first();
 
         // if there is no markers like that
@@ -45,16 +42,16 @@ class MarkerController extends Controller
             $marker->owner_id = $request->owner_id;
             $marker->lat = $request->lat;
             $marker->lng = $request->lng;
+            $marker->title = $request->title;
+            $marker->description = $request->description;
 
             if ($marker->save()) {
-                $infoMessage->message = 'Marker successfully created';
-                return response()->json($infoMessage);
+                return response()->json((object)['message' => 'Marker successfully created']);
             } else {
                 return response()->view('errors.500', [], 500);
             }
         } else {
-            $infoMessage->message = 'This marker have already been created by you';
-            return response()->json($infoMessage);
+            return response()->json((object)['message' => 'This marker has already been created by you'], 418);
         }
     }
 
@@ -81,10 +78,12 @@ class MarkerController extends Controller
 
         $marker->lat = $request->lat;
         $marker->lng = $request->lng;
+        $marker->title = $request->title;
+        $marker->description = $request->description;
 
         $marker->save();
 
-        return response()->json((Object) ['message' => 'Marker successfully updated']);
+        return response()->json((object)['message' => 'Marker successfully updated']);
     }
 
     /**
@@ -97,6 +96,6 @@ class MarkerController extends Controller
     {
         Marker::findOrFail($id)->delete();
 
-        return response()->json((Object) ['message' => 'Marker successfully deleted']);
+        return response()->json((object)['message' => 'Marker successfully deleted']);
     }
 }

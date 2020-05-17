@@ -18,6 +18,9 @@ class CreateMarkersTable extends Migration
             $table->foreignId('owner_id')->constrained('users');
             $table->float('lat', 7, 4);
             $table->float('lng', 7, 4);
+            $table->string('title');
+            $table->text('description');
+            $table->string('photos')->nullable();
             $table->timestamps();
         });
     }
