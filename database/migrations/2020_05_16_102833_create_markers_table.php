@@ -20,7 +20,7 @@ class CreateMarkersTable extends Migration
             $table->float('lng', 7, 4);
             $table->string('title');
             $table->text('description');
-            $table->string('photos')->nullable();
+            $table->string('photos');
             $table->timestamps();
         });
     }

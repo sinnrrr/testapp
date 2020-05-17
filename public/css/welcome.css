@@ -19,6 +19,10 @@ header {
   line-height: 8vh;
 }
 
+small {
+  color: gray;
+}
+
 a:active,
 a:visited {
   text-decoration: none;

@@ -45,6 +45,10 @@ class MarkerController extends Controller
             $marker->title = $request->title;
             $marker->description = $request->description;
 
+            if ($request->hasFile('photos')) {
+                $marker->photos = $request->photos->store('uploads');
+            }
+
             if ($marker->save()) {
                 return response()->json((object)['message' => 'Marker successfully created']);
             } else {
