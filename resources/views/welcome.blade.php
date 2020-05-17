@@ -31,16 +31,31 @@
 <div id="map"></div>
 <div class="spacer"></div>
 <script>
+    let markers;
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', '/api/markers', false);
+    xhr.send();
+
+    if (xhr.status !== 200) {
+        alert(`${xhr.status}: ${xhr.statusText}`);
+    } else {
+        markers = JSON.parse(xhr.responseText);
+    }
+
     function initMap() {
         let map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 50.7593, lng: 25.3424},
             zoom: 4
         });
-        // let marker = new google.maps.Marker({
-        //     position: myLatLng,
-        //     map: map,
-        //     title: 'Hello World!'
-        // });
+
+        markers.forEach((element) => {
+            let marker = new google.maps.Marker({
+                position: { lat: element.lat, lng: element.lng },
+                map: map,
+                title: 'Hello World!'
+            });
+        });
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRwPhPwGJgjuQJhNXq__cjCo6oU_XQdM&callback=initMap"
