@@ -29,6 +29,21 @@ Route::post('comments', 'CommentController@store');
 Route::put('comments/{id}', 'CommentController@update');
 Route::delete('comments/{id}', 'CommentController@destroy');
 
+// photos api
+Route::get('photos', 'PhotoController@index');
+Route::get('photos/{id}', 'PhotoController@show');
+Route::post('photos', 'PhotoController@store');
+Route::put('photos/{id}', 'PhotoController@update');
+Route::delete('photos/{id}', 'PhotoController@destroy');
+
+// users api
+Route::get('users', 'UserController@index');
+Route::get('users/{id}', 'UserController@show');
+Route::get('users/{id}/markers', 'UserController@markers');
+Route::get('users/{id}/comments', 'UserController@comments');
+Route::get('users/{id}/photos', 'UserController@photos');
+Route::delete('users/{id}', 'UserController@destroy');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

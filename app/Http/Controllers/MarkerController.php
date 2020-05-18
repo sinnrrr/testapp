@@ -45,9 +45,9 @@ class MarkerController extends Controller
             $marker->title = $request->title;
             $marker->description = $request->description;
 
-            if ($request->hasFile('photos')) {
-                $marker->photos = $request->photos->store('uploads');
-            }
+//            if ($request->hasFile('photos')) {
+//                $marker->photos = $request->photos->store('uploads');
+//            }
 
             if ($marker->save()) {
                 return response()->json((object)['message' => 'Marker successfully created']);
@@ -62,6 +62,7 @@ class MarkerController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param $id
      * @return JsonResponse
      */
     public function show($id)
@@ -87,7 +88,7 @@ class MarkerController extends Controller
 
         $marker->save();
 
-        return response()->json((object)['message' => 'Marker successfully updated']);
+        return response()->json((object)['message' => "Marker ID {$id} successfully updated"]);
     }
 
     /**
@@ -100,6 +101,6 @@ class MarkerController extends Controller
     {
         Marker::findOrFail($id)->delete();
 
-        return response()->json((object)['message' => 'Marker successfully deleted']);
+        return response()->json((object)['message' => "Marker ID {$id} successfully deleted"]);
     }
 }

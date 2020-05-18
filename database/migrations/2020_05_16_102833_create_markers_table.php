@@ -15,12 +15,15 @@ class CreateMarkersTable extends Migration
     {
         Schema::create('markers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id')->constrained('users');
+            $table
+                ->foreignId('owner_id')
+                ->constrained('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->float('lat', 7, 4);
             $table->float('lng', 7, 4);
             $table->string('title');
             $table->text('description');
-            $table->string('photos');
             $table->timestamps();
         });
     }

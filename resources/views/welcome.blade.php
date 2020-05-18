@@ -46,17 +46,25 @@
     function initMap() {
         let map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 50.7593, lng: 25.3424},
-            zoom: 4
+            zoom: 3
         });
 
         markers.forEach((element) => {
             let marker = new google.maps.Marker({
                 position: { lat: element.lat, lng: element.lng },
+                animation: google.maps.Animation.DROP,
                 map: map
             });
 
+            // html block
+            const markerTitle = `<h1>${element.title}</h1>`;
+            const markerDescription = `<p>${element.description}</p>`;
+            const markerCoords = `<p><small>Latitude: ${element.lat}<br>Longitude: ${element.lng}</small></p>`;
+            const markerLink = `<a href="/place/${element.id}">See more</a>`;
+
+            // popup info window
             let infoWindow = new google.maps.InfoWindow({
-                content: `<h1>${element.title}</h1><p>${element.description}</p><p><small>Latitude: ${element.lat}<br>Longitude: ${element.lng}</small></p>`
+                content: markerTitle + markerDescription + markerLink
             });
 
             marker.addListener('click', () => {

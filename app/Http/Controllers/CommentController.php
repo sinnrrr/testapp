@@ -79,7 +79,7 @@ class CommentController extends Controller
 
         $comment->save();
 
-        return response()->json((object)['message' => 'Comment successfully updated']);
+        return response()->json((object)['message' => "Comment {$id} successfully updated"]);
     }
 
     /**
@@ -92,6 +92,6 @@ class CommentController extends Controller
     {
         Comment::findOrFail($id)->delete();
 
-        return response()->json((object)['message' => 'Comment successfully destroyed']);
+        return response()->json((object)['message' => "Comment {$id} successfully destroyed"]);
     }
 }

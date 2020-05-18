@@ -93,20 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {
-      lat: -34.397,
-      lng: 150.644
-    },
-    zoom: 8
-  });
-  var marker = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    title: 'Hello World!'
-  });
-}
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\rays_s\\Documents\\Dmytro\\web\\laravel\\testapp\\resources\\js\\welcome.js'");
 
 /***/ }),
 
