@@ -44,7 +44,7 @@ class CommentController extends Controller
             $comment->body = $request->body;
 
             if ($comment->save()) {
-                return response()->json((object)['message' => 'Comment successfully created']);
+                return response()->json($comment);
             } else {
                 return response()->view('errors.500', [], 500);
             }
@@ -69,7 +69,7 @@ class CommentController extends Controller
      *
      * @param Request $request
      * @param $id
-     * @return JsonResponse
+     * @return mixed
      */
     public function update(Request $request, $id)
     {
@@ -77,9 +77,12 @@ class CommentController extends Controller
 
         $comment->body = $request->body;
 
-        $comment->save();
 
-        return response()->json((object)['message' => "Comment {$id} successfully updated"]);
+        if ($comment->save()) {
+            return response()->json($comment);
+        } else {
+            return response()->view('errors.500', [], 500);
+        }
     }
 
     /**

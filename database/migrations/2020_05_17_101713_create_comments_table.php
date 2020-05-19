@@ -26,10 +26,6 @@ class CreateCommentsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->text('body');
-            $table
-                ->integer('likes')
-                ->default(0)
-                ->unsigned();
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@ class PhotoController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return JsonResponse
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -36,9 +36,11 @@ class PhotoController extends Controller
             $photo->content = $request->file('content')->store('uploads', 'public');
         }
 
-        $photo->save();
-
-        return response()->json((Object) ['message' => 'Photo successfully created']);
+        if ($photo->save()) {
+            return response()->json($photo);
+        } else {
+            return response()->view('errors.500', [], 500);
+        }
     }
 
     /**
@@ -57,19 +59,21 @@ class PhotoController extends Controller
      *
      * @param Request $request
      * @param $id
-     * @return JsonResponse
+     * @return mixed
      */
     public function update(Request $request, $id)
     {
         $photo = Photo::findOrFail($id);
 
         if ($request->hasFile('photos')) {
-            $photo->content = Storage::disk('public')->putFile('uploads', $request->file('photos'));
+            $photo->content = $request->file('content')->store('uploads', 'public');
         }
 
-        $photo->save();
-
-        return response()->json((Object) ['message' => "Photo ID {$id} successfully updated"]);
+        if ($photo->save()) {
+            return response()->json($photo);
+        } else {
+            return response()->view('errors.500', [], 500);
+        }
     }
 
     /**

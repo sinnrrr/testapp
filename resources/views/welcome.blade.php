@@ -17,7 +17,7 @@
     @if (Route::has('login'))
         <div class="top-right links">
             @auth
-                <a href="{{ url('/home') }}">Home</a>
+                <a href="{{ url('/home') }}">-> Home <-</a>
             @else
                 <a href="{{ route('login') }}">Login</a>
 
@@ -59,7 +59,6 @@
             // html block
             const markerTitle = `<h1>${element.title}</h1>`;
             const markerDescription = `<p>${element.description}</p>`;
-            const markerCoords = `<p><small>Latitude: ${element.lat}<br>Longitude: ${element.lng}</small></p>`;
             const markerLink = `<a href="/place/${element.id}">See more</a>`;
 
             // popup info window

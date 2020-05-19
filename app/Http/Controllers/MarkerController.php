@@ -50,7 +50,7 @@ class MarkerController extends Controller
 //            }
 
             if ($marker->save()) {
-                return response()->json((object)['message' => 'Marker successfully created']);
+                return response()->json($marker);
             } else {
                 return response()->view('errors.500', [], 500);
             }
@@ -75,7 +75,7 @@ class MarkerController extends Controller
      *
      * @param Request $request
      * @param $id
-     * @return JsonResponse
+     * @return mixed
      */
     public function update(Request $request, $id)
     {
@@ -86,9 +86,12 @@ class MarkerController extends Controller
         $marker->title = $request->title;
         $marker->description = $request->description;
 
-        $marker->save();
 
-        return response()->json((object)['message' => "Marker ID {$id} successfully updated"]);
+        if ($marker->save()) {
+            return response()->json($marker);
+        } else {
+            return response()->view('errors.500', [], 500);
+        }
     }
 
     /**

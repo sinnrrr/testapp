@@ -25,7 +25,7 @@ class CreatePhotosTable extends Migration
                 ->constrained('markers')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->json('content');
+            $table->string('content');
             $table->timestamps();
         });
     }
