@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="container">
-        <Dashboard/>
+        <Dashboard
+            :user="{{ \Illuminate\Support\Facades\Auth::user() }}"
+            :markers="{{ $markerData }}"></Dashboard>
     </div>
 @endsection

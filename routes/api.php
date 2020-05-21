@@ -39,6 +39,7 @@ Route::delete('photos/{id}', 'PhotoController@destroy');
 // users api
 Route::get('users', 'UserController@index');
 Route::get('users/{id}', 'UserController@show');
+Route::get('users/{id}/promote', 'UserController@promote');
 Route::get('users/{id}/markers', 'UserController@markers');
 Route::get('users/{id}/comments', 'UserController@comments');
 Route::get('users/{id}/photos', 'UserController@photos');

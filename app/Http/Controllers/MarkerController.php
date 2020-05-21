@@ -45,11 +45,9 @@ class MarkerController extends Controller
             $marker->title = $request->title;
             $marker->description = $request->description;
 
-//            if ($request->hasFile('photos')) {
-//                $marker->photos = $request->photos->store('uploads');
-//            }
-
             if ($marker->save()) {
+                $marker->message = 'Marker successfully created';
+
                 return response()->json($marker);
             } else {
                 return response()->view('errors.500', [], 500);
@@ -81,13 +79,12 @@ class MarkerController extends Controller
     {
         $marker = Marker::findOrFail($id);
 
-        $marker->lat = $request->lat;
-        $marker->lng = $request->lng;
         $marker->title = $request->title;
         $marker->description = $request->description;
 
-
         if ($marker->save()) {
+            $marker->message = "Marker ID {$id} successfully updated";
+
             return response()->json($marker);
         } else {
             return response()->view('errors.500', [], 500);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
@@ -18,12 +19,11 @@ class PlaceController extends Controller
         $markerData = \App\Marker::findOrFail($id);
         $userData = \App\User::findOrFail($markerData->owner_id);
         $photoData = \App\Photo::where('marker_id', $id)->get();
-        $commentData = \App\Comment::where('marker_id', $id)->get();
-
+        $commentData = \App\Comment::where('marker_id', $id)->orderBy('created_at', 'desc')->get();
 
         $commentUserIDs = [];
-        $commentUserNameData = [];
         $commentUserData = [];
+        $commentUserNameData = [];
 
         // process of getting all IDs related to comments
         // in order to make only one query, where we are getting user names
@@ -52,7 +52,10 @@ class PlaceController extends Controller
             'userData' => $userData,
             'photoData' => $photoData,
             'commentData' => $commentData,
-            'commentUserData' => $commentUserData
+            'commentUserData' => $commentUserData,
+            'checkAuth' => !Auth::check(),
+            'authID' => Auth::id(),
+            'authName' => Auth::user()->name
         ]);
     }
 }

@@ -37,6 +37,8 @@ class PhotoController extends Controller
         }
 
         if ($photo->save()) {
+            $photo->message = 'Photo successfully uploaded';
+
             return response()->json($photo);
         } else {
             return response()->view('errors.500', [], 500);
@@ -54,8 +56,10 @@ class PhotoController extends Controller
         return response()->json(Photo::findOrFail($id));
     }
 
+
     /**
      * Update the specified resource in storage.
+     * Not sure if this should be in app.
      *
      * @param Request $request
      * @param $id
@@ -70,6 +74,8 @@ class PhotoController extends Controller
         }
 
         if ($photo->save()) {
+            $photo->message = "Photo ID {$id} successfully updated";
+
             return response()->json($photo);
         } else {
             return response()->view('errors.500', [], 500);

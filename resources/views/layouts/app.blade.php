@@ -21,6 +21,9 @@
 </head>
 <body>
     <div id="app">
+        <div id="popup">
+            <p id="notify"></p>
+        </div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">

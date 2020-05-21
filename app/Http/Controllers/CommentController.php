@@ -44,6 +44,7 @@ class CommentController extends Controller
             $comment->body = $request->body;
 
             if ($comment->save()) {
+                $comment->message = 'Comment successfully created';
                 return response()->json($comment);
             } else {
                 return response()->view('errors.500', [], 500);
@@ -79,6 +80,7 @@ class CommentController extends Controller
 
 
         if ($comment->save()) {
+            $comment->message = "Comment ID {$id} successfully updated";
             return response()->json($comment);
         } else {
             return response()->view('errors.500', [], 500);
@@ -95,6 +97,6 @@ class CommentController extends Controller
     {
         Comment::findOrFail($id)->delete();
 
-        return response()->json((object)['message' => "Comment {$id} successfully destroyed"]);
+        return response()->json((object)['message' => "Comment ID {$id} successfully destroyed"]);
     }
 }

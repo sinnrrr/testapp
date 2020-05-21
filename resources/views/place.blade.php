@@ -1,11 +1,4 @@
-<?php
-
-$checkAuth = !\Illuminate\Support\Facades\Auth::check();
-$authID = \Illuminate\Support\Facades\Auth::id();
-$authName = \Illuminate\Support\Facades\Auth::user()->name;
-
-?>
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -23,7 +16,7 @@ $authName = \Illuminate\Support\Facades\Auth::user()->name;
 <body>
 <div class="container">
     <div id="popup">
-        <p>New comment has been added</p>
+        <p id="notify"></p>
     </div>
     <div class="w-100 py-3">
         <a href="/"><- Go back</a>
@@ -91,6 +84,7 @@ $authName = \Illuminate\Support\Facades\Auth::user()->name;
 </div>
 <script>
     const submitButton = document.getElementById('submitButton');
+    const notify = document.getElementById('notify');
     const marker_id = {{ $markerData->id }};
     const owner_id = {{ $authID }};
 
@@ -132,13 +126,17 @@ $authName = \Illuminate\Support\Facades\Auth::user()->name;
             const commentDate = `<div><span>Created at ${response.created_at}</span></div>`;
 
             // adding new comment
-            articles.innerHTML += '<article>' + commentTitle + commentDescription + commentDate + '</article>';
+            articles.innerHTML =
+                '<article>' + commentTitle + commentDescription + commentDate + '</article>' + articles.innerHTML;
 
             // increasing comment counter
-            commentCounter.innerHTML = eval(`${commentCounter.innerHTML} + 1`);
+            commentCounter.innerText = eval(`${commentCounter.innerText} + 1`);
 
             // erasing comment field
             commentField.value = '';
+
+            // setting notify text
+            notify.innerText = response.message;
 
             // showing popup
             popup.className = 'show';
