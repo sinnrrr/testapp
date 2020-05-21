@@ -1954,6 +1954,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Create",
   props: {
@@ -1969,7 +1973,9 @@ __webpack_require__.r(__webpack_exports__);
     createMarker: function createMarker(e) {
       var xhr = new XMLHttpRequest();
       var popup = document.getElementById('popup');
-      var notify = document.getElementById('notify');
+      var notify = document.getElementById('notify'); // let markerStorage = document.getElementById('markerStorage');
+
+      var markerPhoto = document.getElementById('markerPhoto');
       var markerCounter = document.getElementById('markerCounter'); // preparing data to transfer
 
       var data = {
@@ -1992,8 +1998,47 @@ __webpack_require__.r(__webpack_exports__);
 
         //parsing response
         var response = JSON.parse(xhr.response);
+
+        if (markerPhoto.files.length > 0) {
+          var _xhr = new XMLHttpRequest();
+
+          var formData = new FormData();
+          formData.append('marker_id', response.id);
+          formData.append('owner_id', response.owner_id);
+          formData.append('content', markerPhoto.files[0]);
+
+          _xhr.open('POST', '/api/photos', false);
+
+          _xhr.send(formData);
+
+          if (_xhr.status !== 200) {
+            alert("".concat(_xhr.status, ": ").concat(_xhr.statusText));
+          } else {
+            console.log('yay');
+          }
+        }
+
         this.$router.push('/home');
-        markerCounter.innerText = eval("".concat(markerCounter.innerText, " + 1")); // setting up popup
+        markerCounter.innerText = eval("".concat(markerCounter.innerText, " + 1")); // html block
+        // const latitude = `<small>Latitude: ${data.lat}</small>`
+        // const longitude = `<small>Longitude: ${data.lng}</small>`
+        //
+        // const readButton = `<button class="btn btn-info" disabled>Read</button>`;
+        // const updateButton = `<button class="btn btn-warning" disabled>Update</button>`;
+        // const deleteButton = `<button class="btn btn-danger" disabled>Delete</button>`;
+        // const createdAt = `<span>Created at ${response.created_at}</span>`
+        //
+        // const markerTitle = ``
+        //
+        // markerStorage.innerHTML =
+        //     `<article>
+        //         <section class="wrapper">
+        //             <div>${latitude}<br>${longitude}</div>
+        //             <div class="button-group">${readButton}${updateButton}${deleteButton}</div>
+        //             <div>${createdAt}</div>
+        //         </section>
+        //      </article>` + markerStorage.innerHTML;
+        // setting up popup
 
         notify.innerText = response.message;
         popup.className = 'show';
@@ -38890,6 +38935,11 @@ var render = function() {
           }
         }),
         _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control-file my-3",
+          attrs: { id: "markerPhoto", type: "file" }
+        }),
+        _vm._v(" "),
         _c("label", { attrs: { for: "markerDescription" } }, [
           _vm._v("Description")
         ]),
@@ -39174,7 +39224,7 @@ var render = function() {
             _vm._l(_vm.markers, function(marker) {
               return _c(
                 "section",
-                { key: marker.id, attrs: { id: "storage" } },
+                { key: marker.id, attrs: { id: "markerStorage" } },
                 [_c("Default", { attrs: { marker: marker } })],
                 1
               )

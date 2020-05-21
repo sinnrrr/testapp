@@ -29,6 +29,10 @@
                    type="text"
                    class="form-control">
 
+            <input id="markerPhoto"
+                   type="file"
+                   class="form-control-file my-3">
+
             <label for="markerDescription">Description</label>
             <textarea id="markerDescription"
                       v-model="marker.description"
@@ -62,6 +66,8 @@
                 let xhr = new XMLHttpRequest();
                 let popup = document.getElementById('popup');
                 let notify = document.getElementById('notify');
+                // let markerStorage = document.getElementById('markerStorage');
+                let markerPhoto = document.getElementById('markerPhoto');
                 let markerCounter = document.getElementById('markerCounter');
 
                 // preparing data to transfer
@@ -83,9 +89,48 @@
                     //parsing response
                     const response = JSON.parse(xhr.response);
 
+                    if (markerPhoto.files.length > 0) {
+                        let xhr = new XMLHttpRequest();
+                        let formData = new FormData();
+
+                        formData.append('marker_id', response.id);
+                        formData.append('owner_id', response.owner_id);
+                        formData.append('content', markerPhoto.files[0]);
+
+                        xhr.open('POST', '/api/photos', false);
+                        xhr.send(formData);
+
+                        if (xhr.status !== 200) {
+                            alert(`${xhr.status}: ${xhr.statusText}`);
+                        } else {
+                            console.log('yay')
+                        }
+
+                    }
+
                     this.$router.push('/home');
 
                     markerCounter.innerText = eval(`${markerCounter.innerText} + 1`);
+
+                    // html block
+                    // const latitude = `<small>Latitude: ${data.lat}</small>`
+                    // const longitude = `<small>Longitude: ${data.lng}</small>`
+                    //
+                    // const readButton = `<button class="btn btn-info" disabled>Read</button>`;
+                    // const updateButton = `<button class="btn btn-warning" disabled>Update</button>`;
+                    // const deleteButton = `<button class="btn btn-danger" disabled>Delete</button>`;
+                    // const createdAt = `<span>Created at ${response.created_at}</span>`
+                    //
+                    // const markerTitle = ``
+                    //
+                    // markerStorage.innerHTML =
+                    //     `<article>
+                    //         <section class="wrapper">
+                    //             <div>${latitude}<br>${longitude}</div>
+                    //             <div class="button-group">${readButton}${updateButton}${deleteButton}</div>
+                    //             <div>${createdAt}</div>
+                    //         </section>
+                    //      </article>` + markerStorage.innerHTML;
 
                     // setting up popup
                     notify.innerText = response.message;

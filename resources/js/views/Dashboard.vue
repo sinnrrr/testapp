@@ -20,7 +20,7 @@
             <transition>
                 <router-view :owner="user.id"></router-view>
             </transition>
-            <section id="storage" v-for="marker in markers" :key="marker.id">
+            <section id="markerStorage" v-for="marker in markers" :key="marker.id">
                 <Default :marker="marker" />
             </section>
         </div>
