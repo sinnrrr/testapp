@@ -49,6 +49,9 @@
 </template>
 
 <script>
+    // import Vue from 'vue';
+    // import Default from "./Default";
+
     export default {
         name: "Create",
         props: {
@@ -66,7 +69,7 @@
                 let xhr = new XMLHttpRequest();
                 let popup = document.getElementById('popup');
                 let notify = document.getElementById('notify');
-                // let markerStorage = document.getElementById('markerStorage');
+                let markerStorage = document.getElementById('markerStorage');
                 let markerPhoto = document.getElementById('markerPhoto');
                 let markerCounter = document.getElementById('markerCounter');
 
@@ -128,6 +131,12 @@
                     //             <div>${createdAt}</div>
                     //         </section>
                     //      </article>` + markerStorage.innerHTML;
+
+                    // new Vue({
+                    //     el: '#markerStorage',
+                    //     template: '<Default :marker="this.response" />',
+                    //     components: { Default }
+                    // })
 
                     // setting up popup
                     notify.innerText = response.message;

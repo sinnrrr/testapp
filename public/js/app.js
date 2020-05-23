@@ -1958,6 +1958,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+// import Vue from 'vue';
+// import Default from "./Default";
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Create",
   props: {
@@ -1973,8 +1975,8 @@ __webpack_require__.r(__webpack_exports__);
     createMarker: function createMarker(e) {
       var xhr = new XMLHttpRequest();
       var popup = document.getElementById('popup');
-      var notify = document.getElementById('notify'); // let markerStorage = document.getElementById('markerStorage');
-
+      var notify = document.getElementById('notify');
+      var markerStorage = document.getElementById('markerStorage');
       var markerPhoto = document.getElementById('markerPhoto');
       var markerCounter = document.getElementById('markerCounter'); // preparing data to transfer
 
@@ -2036,6 +2038,11 @@ __webpack_require__.r(__webpack_exports__);
         //             <div>${createdAt}</div>
         //         </section>
         //      </article>` + markerStorage.innerHTML;
+        // new Vue({
+        //     el: '#markerStorage',
+        //     template: '<Default :marker="this.response" />',
+        //     components: { Default }
+        // })
         // setting up popup
 
         notify.innerText = response.message;
