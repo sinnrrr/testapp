@@ -102,10 +102,7 @@
 
                         if (xhr.status !== 200) {
                             alert(`${xhr.status}: ${xhr.statusText}`);
-                        } else {
-                            console.log('yay')
                         }
-
                     }
 
                     this.$router.push('/home');

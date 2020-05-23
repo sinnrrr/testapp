@@ -27,6 +27,9 @@
         <div v-else>
             <hr>
             <b>You haven't created any markers</b>
+            <transition>
+                <router-view :owner="user.id"></router-view>
+            </transition>
         </div>
     </section>
 </template>

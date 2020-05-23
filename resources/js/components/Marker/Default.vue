@@ -43,6 +43,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         name: "Default",
         props: {
@@ -51,6 +53,31 @@
         },
         methods: {
             deleteMarker: function (e) {
+                // axios.delete(`/api/markers/${this.marker.id}`)
+                //     .then(function (response) {
+                //         let popup = document.getElementById('popup');
+                //         let notify = document.getElementById('notify');
+                //         let markerCounter = document.getElementById('markerCounter');
+                //
+                //         // removing marker
+                //         markerBlock.remove();
+                //
+                //         // decreasing comment counter
+                //         markerCounter.innerText = eval(`${markerCounter.innerText} - 1`);
+                //
+                //         // setting up popup
+                //         notify.innerText = response.message;
+                //         popup.className = 'show';
+                //
+                //         function removePopup() {
+                //             popup.className = 'hide'
+                //         }
+                //
+                //         setTimeout(removePopup, 3000);
+                //     })
+                //     .catch(function (error) {
+                //         console.log(error);
+                //     });
                 let xhr = new XMLHttpRequest();
                 let markerBlock = document.getElementById(this.marker.id);
 
