@@ -2068,8 +2068,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2114,7 +2112,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Default",
   props: {
@@ -2123,31 +2120,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     deleteMarker: function deleteMarker(e) {
-      // axios.delete(`/api/markers/${this.marker.id}`)
-      //     .then(function (response) {
-      //         let popup = document.getElementById('popup');
-      //         let notify = document.getElementById('notify');
-      //         let markerCounter = document.getElementById('markerCounter');
-      //
-      //         // removing marker
-      //         markerBlock.remove();
-      //
-      //         // decreasing comment counter
-      //         markerCounter.innerText = eval(`${markerCounter.innerText} - 1`);
-      //
-      //         // setting up popup
-      //         notify.innerText = response.message;
-      //         popup.className = 'show';
-      //
-      //         function removePopup() {
-      //             popup.className = 'hide'
-      //         }
-      //
-      //         setTimeout(removePopup, 3000);
-      //     })
-      //     .catch(function (error) {
-      //         console.log(error);
-      //     });
       var xhr = new XMLHttpRequest();
       var markerBlock = document.getElementById(this.marker.id);
       xhr.open('DELETE', "/api/markers/".concat(this.marker.id), false);
@@ -2224,13 +2196,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Marker_Default__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Marker/Default */ "./resources/js/components/Marker/Default.vue");
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -39230,52 +39195,36 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm.markers.length > 0
-      ? _c(
-          "div",
-          { staticClass: "content mt-5" },
-          [
-            _c("h3", [
-              _vm._v("Markers: "),
-              _c("span", { attrs: { id: "markerCounter" } }, [
-                _vm._v(_vm._s(_vm.markers.length))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c(
-              "transition",
-              [_c("router-view", { attrs: { owner: _vm.user.id } })],
-              1
-            ),
-            _vm._v(" "),
-            _vm._l(_vm.markers, function(marker) {
-              return _c(
-                "section",
-                { key: marker.id, attrs: { id: "markerStorage" } },
-                [_c("Default", { attrs: { marker: marker } })],
-                1
-              )
-            })
-          ],
-          2
-        )
-      : _c(
-          "div",
-          [
-            _c("hr"),
-            _vm._v(" "),
-            _c("b", [_vm._v("You haven't created any markers")]),
-            _vm._v(" "),
-            _c(
-              "transition",
-              [_c("router-view", { attrs: { owner: _vm.user.id } })],
-              1
-            )
-          ],
+    _c(
+      "div",
+      { staticClass: "content mt-5" },
+      [
+        _c("h3", [
+          _vm._v("Markers: "),
+          _c("span", { attrs: { id: "markerCounter" } }, [
+            _vm._v(_vm._s(_vm.markers.length))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c(
+          "transition",
+          [_c("router-view", { attrs: { owner: _vm.user.id } })],
           1
-        )
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.markers, function(marker) {
+          return _c(
+            "section",
+            { key: marker.id, attrs: { id: "markerStorage" } },
+            [_c("Default", { attrs: { marker: marker } })],
+            1
+          )
+        })
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = [

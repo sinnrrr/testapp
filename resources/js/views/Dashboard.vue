@@ -14,7 +14,7 @@
                 </router-link>
             </div>
         </header>
-        <div class="content mt-5" v-if="markers.length > 0">
+        <div class="content mt-5">
             <h3>Markers: <span id="markerCounter">{{ markers.length }}</span></h3>
             <hr>
             <transition>
@@ -23,13 +23,6 @@
             <section id="markerStorage" v-for="marker in markers" :key="marker.id">
                 <Default :marker="marker" />
             </section>
-        </div>
-        <div v-else>
-            <hr>
-            <b>You haven't created any markers</b>
-            <transition>
-                <router-view :owner="user.id"></router-view>
-            </transition>
         </div>
     </section>
 </template>
