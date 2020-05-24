@@ -55,7 +55,7 @@ class PlaceController extends Controller
             'commentUserData' => $commentUserData,
             'checkAuth' => !Auth::check(),
             'authID' => Auth::id(),
-            'authName' => Auth::user()->name
+            'authName' => Auth::user()->name ?? 'Unknown'
         ]);
     }
 }

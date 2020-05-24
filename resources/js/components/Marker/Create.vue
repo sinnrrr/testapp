@@ -69,7 +69,6 @@
                 let xhr = new XMLHttpRequest();
                 let popup = document.getElementById('popup');
                 let notify = document.getElementById('notify');
-                let markerStorage = document.getElementById('markerStorage');
                 let markerPhoto = document.getElementById('markerPhoto');
                 let markerCounter = document.getElementById('markerCounter');
 
