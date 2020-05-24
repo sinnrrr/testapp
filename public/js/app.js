@@ -2031,7 +2031,8 @@ __webpack_require__.r(__webpack_exports__);
         popup.className = 'show';
         response.created_at = new Date(response.created_at).toJSON();
         response.created_at = response.created_at.substring(0, response.created_at.length - 5);
-        response.created_at = response.created_at.replace(/T/g, " ");
+        response.created_at = response.created_at.replace(/T/g, " "); // rendering Default component
+
         new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           el: '#markerStorage',
           template: "<Default :marker='".concat(JSON.stringify(response), "' />"),
@@ -2051,8 +2052,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Hello world',
         description: 'This is my new marker',
         owner_id: this.owner
-      },
-      isDefault: false
+      }
     };
   }
 });
@@ -38825,170 +38825,165 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return !_vm.isDefault
-    ? _c("article", { attrs: { id: _vm.marker.id } }, [
+  return _c("article", { attrs: { id: _vm.marker.id } }, [
+    _c(
+      "div",
+      { staticClass: "d-flex flex-column" },
+      [
+        _c("span", [_vm._v("Drag marker to point a place")]),
+        _vm._v(" "),
         _c(
-          "div",
-          { staticClass: "d-flex flex-column" },
+          "GmapMap",
+          {
+            staticStyle: { width: "100%", height: "300px" },
+            attrs: {
+              center: { lat: _vm.marker.lat, lng: _vm.marker.lng },
+              zoom: 4,
+              "map-type-id": "terrain"
+            }
+          },
           [
-            _c("span", [_vm._v("Drag marker to point a place")]),
-            _vm._v(" "),
-            _c(
-              "GmapMap",
-              {
-                staticStyle: { width: "100%", height: "300px" },
-                attrs: {
-                  center: { lat: _vm.marker.lat, lng: _vm.marker.lng },
-                  zoom: 4,
-                  "map-type-id": "terrain"
-                }
+            _c("GmapMarker", {
+              key: _vm.marker.id,
+              attrs: {
+                position: { lat: _vm.marker.lat, lng: _vm.marker.lng },
+                draggable: true
               },
-              [
-                _c("GmapMarker", {
-                  key: _vm.marker.id,
-                  attrs: {
-                    position: { lat: _vm.marker.lat, lng: _vm.marker.lng },
-                    draggable: true
-                  },
-                  on: { dragend: _vm.updateCoordinates }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v("..or")]),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "latitude" } }, [_vm._v("Latitude")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.marker.lat,
-                  expression: "marker.lat"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { id: "latitude", type: "number" },
-              domProps: { value: _vm.marker.lat },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.marker, "lat", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "longitude" } }, [_vm._v("Longitude")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.marker.lng,
-                  expression: "marker.lng"
-                }
-              ],
-              staticClass: "form-control mb-3",
-              attrs: { id: "longitude", type: "number" },
-              domProps: { value: _vm.marker.lng },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.marker, "lng", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "markerTitle" } }, [_vm._v("Title")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.marker.title,
-                  expression: "marker.title"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { id: "markerTitle", type: "text" },
-              domProps: { value: _vm.marker.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.marker, "title", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control-file my-3",
-              attrs: { id: "markerPhoto", type: "file" }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "markerDescription" } }, [
-              _vm._v("Description")
-            ]),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.marker.description,
-                  expression: "marker.description"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { id: "markerDescription", cols: "30", rows: "5" },
-              domProps: { value: _vm.marker.description },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.marker, "description", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "ml-auto mt-3" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  on: { click: _vm.createMarker }
-                },
-                [_vm._v("Create")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger",
-                  on: {
-                    click: function($event) {
-                      return _vm.$router.go(-1)
-                    }
-                  }
-                },
-                [_vm._v("Cancel")]
-              )
-            ])
+              on: { dragend: _vm.updateCoordinates }
+            })
           ],
           1
-        )
-      ])
-    : _vm._e()
+        ),
+        _vm._v(" "),
+        _c("span", [_vm._v("..or")]),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "latitude" } }, [_vm._v("Latitude")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.marker.lat,
+              expression: "marker.lat"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "latitude", type: "number" },
+          domProps: { value: _vm.marker.lat },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.marker, "lat", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "longitude" } }, [_vm._v("Longitude")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.marker.lng,
+              expression: "marker.lng"
+            }
+          ],
+          staticClass: "form-control mb-3",
+          attrs: { id: "longitude", type: "number" },
+          domProps: { value: _vm.marker.lng },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.marker, "lng", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "markerTitle" } }, [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.marker.title,
+              expression: "marker.title"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "markerTitle", type: "text" },
+          domProps: { value: _vm.marker.title },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.marker, "title", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control-file my-3",
+          attrs: { id: "markerPhoto", type: "file" }
+        }),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "markerDescription" } }, [
+          _vm._v("Description")
+        ]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.marker.description,
+              expression: "marker.description"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "markerDescription", cols: "30", rows: "5" },
+          domProps: { value: _vm.marker.description },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.marker, "description", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "ml-auto mt-3" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-primary", on: { click: _vm.createMarker } },
+            [_vm._v("Create")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              on: {
+                click: function($event) {
+                  return _vm.$router.go(-1)
+                }
+              }
+            },
+            [_vm._v("Cancel")]
+          )
+        ])
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
