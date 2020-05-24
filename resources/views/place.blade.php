@@ -54,7 +54,9 @@
         <h3>Comments: <span id="commentCounter">{{ count($commentData) }}</span></h3>
         <hr>
         @if($checkAuth)
-            <span>Only registered users can leave a comments!</span>
+            <div class="px-5">
+                <span>Only registered users can leave a comments!</span>
+            </div>
         @endif
         <div class="input-group mb-3 px-5">
             <input type="text"
