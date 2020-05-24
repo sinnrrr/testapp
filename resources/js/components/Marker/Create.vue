@@ -1,10 +1,10 @@
 <template>
-    <article :id="marker.id">
+    <article v-if="!isDefault" :id="marker.id">
         <div class="d-flex flex-column">
             <span>Drag marker to point a place</span>
             <GmapMap
                 :center="{lat: marker.lat, lng: marker.lng}"
-                :zoom="8"
+                :zoom="4"
                 map-type-id="terrain"
                 style="width: 100%; height: 300px">
                 <GmapMarker
@@ -49,13 +49,16 @@
 </template>
 
 <script>
-    // import Vue from 'vue';
-    // import Default from "./Default";
+    import Vue from 'vue';
+    import Default from "./Default";
 
     export default {
         name: "Create",
         props: {
           owner: Number
+        },
+        components: {
+          Default
         },
         methods: {
             updateCoordinates: function (location) {
@@ -111,32 +114,6 @@
 
                     markerCounter.innerText = eval(`${markerCounter.innerText} + 1`);
 
-                    // html block
-                    // const latitude = `<small>Latitude: ${data.lat}</small>`
-                    // const longitude = `<small>Longitude: ${data.lng}</small>`
-                    //
-                    // const readButton = `<button class="btn btn-info" disabled>Read</button>`;
-                    // const updateButton = `<button class="btn btn-warning" disabled>Update</button>`;
-                    // const deleteButton = `<button class="btn btn-danger" disabled>Delete</button>`;
-                    // const createdAt = `<span>Created at ${response.created_at}</span>`
-                    //
-                    // const markerTitle = ``
-                    //
-                    // markerStorage.innerHTML =
-                    //     `<article>
-                    //         <section class="wrapper">
-                    //             <div>${latitude}<br>${longitude}</div>
-                    //             <div class="button-group">${readButton}${updateButton}${deleteButton}</div>
-                    //             <div>${createdAt}</div>
-                    //         </section>
-                    //      </article>` + markerStorage.innerHTML;
-
-                    // new Vue({
-                    //     el: '#markerStorage',
-                    //     template: '<Default :marker="this.response" />',
-                    //     components: { Default }
-                    // })
-
                     // setting up popup
                     notify.innerText = response.message;
                     popup.className = 'show';
@@ -144,6 +121,17 @@
                     function removePopup() {
                         popup.className = 'hide'
                     }
+
+                    // date reformatting
+                    response.created_at = new Date(response.created_at).toJSON();
+                    response.created_at = response.created_at.substring(0, response.created_at.length - 5);
+                    response.created_at = response.created_at.replace(/T/g, " ");
+
+                    new Vue({
+                        el: '#markerStorage',
+                        template: `<Default :marker='${JSON.stringify(response)}' />`,
+                        components: { Default }
+                    })
 
                     setTimeout(removePopup, 3000);
                 }
@@ -157,7 +145,8 @@
                     title: 'Hello world',
                     description: 'This is my new marker',
                     owner_id: this.owner
-                }
+                },
+                isDefault: false
             }
         }
     }
