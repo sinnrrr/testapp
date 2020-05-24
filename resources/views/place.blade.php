@@ -53,10 +53,10 @@
     <section class="my-5">
         <h3>Comments: <span id="commentCounter">{{ count($commentData) }}</span></h3>
         <hr>
+        @if($checkAuth)
+            <span>Only registered users can leave a comments!</span>
+        @endif
         <div class="input-group mb-3 px-5">
-            @if($checkAuth)
-                <span>Only registered users can leave a comments!</span>
-            @endif
             <input type="text"
                    id="commentInput"
                    class="form-control rounded-left"
