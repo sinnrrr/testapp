@@ -121,18 +121,18 @@
                     function removePopup() {
                         popup.className = 'hide'
                     }
-                    
+
                     // date reformatting
                     response.created_at = new Date(response.created_at).toJSON();
                     response.created_at = response.created_at.substring(0, response.created_at.length - 5);
                     response.created_at = response.created_at.replace(/T/g, " ");
 
                     // rendering Default component
-                    new Vue({
-                        el: '#markerStorage',
-                        template: `<Default :marker='${JSON.stringify(response)}' />`,
-                        components: { Default }
-                    })
+                    // new Vue({
+                    //     el: '#markerStorage',
+                    //     template: `<Default :marker='${JSON.stringify(response)}' />`,
+                    //     components: { Default }
+                    // })
 
                     setTimeout(removePopup, 3000);
                 }
