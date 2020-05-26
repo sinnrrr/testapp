@@ -1,5 +1,6 @@
 require('./bootstrap');
 
+//
 import Vue from 'vue';
 import VueRouter from "vue-router";
 import * as VueGoogleMaps from 'vue2-google-maps';
