@@ -49,8 +49,6 @@ class MarkerController extends Controller
                 $marker->message = 'Marker successfully created';
 
                 return response()->json($marker);
-            } else {
-                return response()->view('errors.500', [], 500);
             }
         } else {
             return response()->json((object)['message' => 'This marker has already been created by you'], 418);
@@ -86,8 +84,6 @@ class MarkerController extends Controller
             $marker->message = "Marker ID {$id} successfully updated";
 
             return response()->json($marker);
-        } else {
-            return response()->view('errors.500', [], 500);
         }
     }
 

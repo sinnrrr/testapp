@@ -82,6 +82,7 @@
                 </article>
             @endforeach
         </div>
+        <div class="pagination"></div>
     </section>
 </div>
 <script>

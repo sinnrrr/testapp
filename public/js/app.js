@@ -2032,14 +2032,12 @@ __webpack_require__.r(__webpack_exports__);
         response.created_at = new Date(response.created_at).toJSON();
         response.created_at = response.created_at.substring(0, response.created_at.length - 5);
         response.created_at = response.created_at.replace(/T/g, " "); // rendering Default component
+        // new Vue({
+        //     el: '#markerStorage',
+        //     template: `<Default :marker='${JSON.stringify(response)}' />`,
+        //     components: { Default }
+        // })
 
-        new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-          el: '#markerStorage',
-          template: "<Default :marker='".concat(JSON.stringify(response), "' />"),
-          components: {
-            Default: _Default__WEBPACK_IMPORTED_MODULE_1__["default"]
-          }
-        });
         setTimeout(removePopup, 3000);
       }
     }

@@ -46,8 +46,6 @@ class CommentController extends Controller
             if ($comment->save()) {
                 $comment->message = 'Comment successfully created';
                 return response()->json($comment);
-            } else {
-                return response()->view('errors.500', [], 500);
             }
         } else {
             return response()->json((object)['message' => 'This comment has already been created by you'], 418);
@@ -82,8 +80,6 @@ class CommentController extends Controller
         if ($comment->save()) {
             $comment->message = "Comment ID {$id} successfully updated";
             return response()->json($comment);
-        } else {
-            return response()->view('errors.500', [], 500);
         }
     }
 
