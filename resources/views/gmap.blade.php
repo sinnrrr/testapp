@@ -1,7 +1,23 @@
 <div id="map"></div>
 <script>
+<<<<<<< Updated upstream:resources/views/gmap.blade.php
     let response = {{ $response }};
     let markers = response.data;
+=======
+    let markers;
+    // let xhr = new XMLHttpRequest();
+    //
+    // xhr.open('GET', '/api/markers', false);
+    // xhr.send();
+    //
+    // if (xhr.status !== 200) {
+    //     alert( xhr.status + ': ' + xhr.statusText );
+    // } else {
+    //     const response = JSON.parse(xhr.response);
+    //     markers = response.data;
+    //     console.log(response)
+    // }
+>>>>>>> Stashed changes:resources/views/welcome.blade.php
 
     function initMap() {
         let map = new google.maps.Map(document.getElementById('map'), {

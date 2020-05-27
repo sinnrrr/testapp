@@ -29,8 +29,31 @@
     @endif
 </header>
 
+<<<<<<< Updated upstream
 @include('gmap')
 
 <div class="spacer"></div>
 </body>
+=======
+<div class="gmap-wrapper">
+    @include('gmap')
+</div>
+
+<div class="spacer"></div>
+</body>
+
+<script>
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', '/', false);
+    xhr.send();
+
+    if (xhr.status !== 200) {
+        alert( xhr.status + ': ' + xhr.statusText );
+    } else {
+        const response = JSON.parse(xhr.response);
+        console.log(response)
+    }
+</script>
+>>>>>>> Stashed changes
 </html>
