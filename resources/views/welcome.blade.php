@@ -32,6 +32,7 @@
 <div class="spacer"></div>
 <script>
     let markers;
+    let response;
     let xhr = new XMLHttpRequest();
 
     xhr.open('GET', '/api/markers', false);
@@ -40,7 +41,8 @@
     if (xhr.status !== 200) {
         alert(`${xhr.status}: ${xhr.statusText}`);
     } else {
-        markers = JSON.parse(xhr.responseText);
+        response = JSON.parse(xhr.response);
+        markers = response.data;
     }
 
     function initMap() {
@@ -49,7 +51,9 @@
             zoom: 3
         });
 
-        markers.forEach((element) => {
+        console.log(response)
+
+        markers.map(element => {
             let marker = new google.maps.Marker({
                 position: { lat: element.lat, lng: element.lng },
                 animation: google.maps.Animation.DROP,
@@ -70,6 +74,23 @@
                 infoWindow.open(map, marker);
             });
         });
+
+
+        if (response.total > 10) {
+            // html block
+            let showMore = document.createElement('a');
+            showMore.innerText = 'Show more'
+            showMore.href = response.next_page_url
+            showMore.style.cursor = 'pointer'
+            showMore.style.borderRadius = '5px'
+            showMore.style.backgroundColor = 'white'
+            showMore.style.padding = '15px 30px'
+            showMore.style.marginBottom = '15px'
+            showMore.style.fontSize = '20px'
+            showMore.style.fontWeight = '600'
+
+            map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(showMore);
+        }
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRwPhPwGJgjuQJhNXq__cjCo6oU_XQdM&callback=initMap"

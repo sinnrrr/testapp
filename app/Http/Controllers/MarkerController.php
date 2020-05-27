@@ -16,7 +16,10 @@ class MarkerController extends Controller
      */
     public function index()
     {
-        return response()->json(Marker::all());
+        $markers = Marker::paginate(10);
+        $markers->withPath('/');
+
+        return response()->json($markers);
     }
 
     /**
