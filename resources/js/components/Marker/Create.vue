@@ -90,6 +90,7 @@
 
                 if (xhr.status !== 200) {
                     alert(`${xhr.status}: ${xhr.statusText}`);
+                    console.log(xhr.response);
                 } else {
                     //parsing response
                     const response = JSON.parse(xhr.response);
@@ -107,6 +108,7 @@
 
                         if (xhr.status !== 200) {
                             alert(`${xhr.status}: ${xhr.statusText}`);
+                            console.log(xhr.response);
                         }
                     }
 

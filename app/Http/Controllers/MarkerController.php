@@ -6,6 +6,7 @@ use App\Marker;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\Marker as MarkerResource;
 
 class MarkerController extends Controller
 {
@@ -16,10 +17,10 @@ class MarkerController extends Controller
      */
     public function index()
     {
-        $markers = Marker::paginate(10);
-        $markers->withPath('/');
+//        $markers = Marker::paginate(10);
+//        $markers->withPath('/');
 
-        return response()->json($markers);
+        return response()->json(Marker::all());
     }
 
     /**
@@ -51,7 +52,7 @@ class MarkerController extends Controller
             if ($marker->save()) {
                 $marker->message = 'Marker successfully created';
 
-                return response()->json($marker);
+                return response()->json(new MarkerResource($marker));
             }
         } else {
             return response()->json((object)['message' => 'This marker has already been created by you'], 418);
@@ -66,7 +67,9 @@ class MarkerController extends Controller
      */
     public function show($id)
     {
-        return response()->json(Marker::findOrFail($id));
+        return response()->json(
+            new MarkerResource(Marker::findOrFail($id))
+        );
     }
 
     /**
@@ -86,7 +89,7 @@ class MarkerController extends Controller
         if ($marker->save()) {
             $marker->message = "Marker ID {$id} successfully updated";
 
-            return response()->json($marker);
+            return response()->json(new MarkerResource($marker));
         }
     }
 

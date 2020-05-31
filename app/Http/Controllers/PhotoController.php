@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Photo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Photo as PhotoResource;
 
 class PhotoController extends Controller
 {
@@ -39,7 +39,7 @@ class PhotoController extends Controller
         if ($photo->save()) {
             $photo->message = 'Photo successfully uploaded';
 
-            return response()->json($photo);
+            return response()->json(new PhotoResource($photo));
         }
     }
 
@@ -51,7 +51,9 @@ class PhotoController extends Controller
      */
     public function show($id)
     {
-        return response()->json(Photo::findOrFail($id));
+        return response()->json(
+            new PhotoResource(Photo::findOrFail($id))
+        );
     }
 
 
@@ -74,7 +76,7 @@ class PhotoController extends Controller
         if ($photo->save()) {
             $photo->message = "Photo ID {$id} successfully updated";
 
-            return response()->json($photo);
+            return response()->json(new PhotoResource($photo));
         }
     }
 

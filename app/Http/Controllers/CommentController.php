@@ -6,6 +6,7 @@ use App\Comment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\Comment as CommentResource;
 
 class CommentController extends Controller
 {
@@ -45,7 +46,7 @@ class CommentController extends Controller
 
             if ($comment->save()) {
                 $comment->message = 'Comment successfully created';
-                return response()->json($comment);
+                return response()->json(new CommentResource($comment));
             }
         } else {
             return response()->json((object)['message' => 'This comment has already been created by you'], 418);
@@ -60,7 +61,9 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        return response()->json(Comment::findOrFail($id));
+        return response()->json(
+            new CommentResource(Comment::findOrFail($id))
+        );
     }
 
     /**
@@ -79,7 +82,7 @@ class CommentController extends Controller
 
         if ($comment->save()) {
             $comment->message = "Comment ID {$id} successfully updated";
-            return response()->json($comment);
+            return response()->json(new CommentResource($comment));
         }
     }
 

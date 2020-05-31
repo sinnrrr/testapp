@@ -42,7 +42,7 @@
         alert(`${xhr.status}: ${xhr.statusText}`);
     } else {
         response = JSON.parse(xhr.response);
-        markers = response.data;
+        markers = response;
     }
 
     function initMap() {

@@ -1992,12 +1992,14 @@ __webpack_require__.r(__webpack_exports__);
         title: this.marker.title,
         description: this.marker.description
       };
+      console.log(data.owner_id);
       xhr.open('POST', '/api/markers/', false);
       xhr.setRequestHeader("Content-type", "application/json");
       xhr.send(JSON.stringify(data));
 
       if (xhr.status !== 200) {
         alert("".concat(xhr.status, ": ").concat(xhr.statusText));
+        console.log(xhr.response);
       } else {
         var removePopup = function removePopup() {
           popup.className = 'hide';
@@ -2008,6 +2010,8 @@ __webpack_require__.r(__webpack_exports__);
         var response = JSON.parse(xhr.response);
 
         if (markerPhoto.files.length > 0) {
+          console.log(response.id, response.owner_id);
+
           var _xhr = new XMLHttpRequest();
 
           var formData = new FormData();
@@ -2021,6 +2025,7 @@ __webpack_require__.r(__webpack_exports__);
 
           if (_xhr.status !== 200) {
             alert("".concat(_xhr.status, ": ").concat(_xhr.statusText));
+            console.log(_xhr.response);
           }
         }
 

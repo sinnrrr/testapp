@@ -3,7 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Marker;
+use App\Comment;
+use App\Photo;
+
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\User as UserResource;
+use App\Http\Resources\Marker as MarkerResource;
+use App\Http\Resources\Comment as CommentResource;
+use App\Http\Resources\Photo as PhotoResource;
 
 class UserController extends Controller
 {
@@ -25,7 +33,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return response()->json(User::findOrFail($id));
+        return response()->json(
+            new UserResource(User::findOrFail($id))
+        );
     }
 
     /**
@@ -36,7 +46,11 @@ class UserController extends Controller
      */
     public function markers($id)
     {
-        return response()->json(\App\Marker::where('owner_id', $id)->get());
+        return response()->json(
+            new MarkerResource(
+                Marker::where('owner_id', $id)->get()
+            )
+        );
     }
 
     /**
@@ -47,7 +61,11 @@ class UserController extends Controller
      */
     public function comments($id)
     {
-        return response()->json(\App\Comment::where('owner_id', $id)->get());
+        return response()->json(
+            new CommentResource(
+                Comment::where('owner_id', $id)->get()
+            )
+        );
     }
 
     /**
@@ -58,7 +76,11 @@ class UserController extends Controller
      */
     public function photos($id)
     {
-        return response()->json(\App\Photo::where('owner_id', $id)->get());
+        return response()->json(
+            new PhotoResource(
+                Photo::where('owner_id', $id)->get()
+            )
+        );
     }
 
     /**
@@ -74,7 +96,7 @@ class UserController extends Controller
 
             if ($user->save()) {
                 $user->message = "User ID {$id} role successfully promoted";
-                return response()->json($user);
+                return response()->json(new UserResource($user));
             }
         } else {
             return response()->json((Object) ['message' => 'You\'re already promoted'], 418);
