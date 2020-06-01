@@ -40,6 +40,8 @@ class PhotoController extends Controller
             $photo->message = 'Photo successfully uploaded';
 
             return response()->json(new PhotoResource($photo));
+        } else {
+            abort(500);
         }
     }
 
@@ -77,6 +79,8 @@ class PhotoController extends Controller
             $photo->message = "Photo ID {$id} successfully updated";
 
             return response()->json(new PhotoResource($photo));
+        } else {
+            abort(500);
         }
     }
 

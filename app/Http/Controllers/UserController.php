@@ -97,6 +97,8 @@ class UserController extends Controller
             if ($user->save()) {
                 $user->message = "User ID {$id} role successfully promoted";
                 return response()->json(new UserResource($user));
+            } else {
+                abort(500);
             }
         } else {
             return response()->json((Object) ['message' => 'You\'re already promoted'], 418);

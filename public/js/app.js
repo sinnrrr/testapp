@@ -1992,7 +1992,6 @@ __webpack_require__.r(__webpack_exports__);
         title: this.marker.title,
         description: this.marker.description
       };
-      console.log(data.owner_id);
       xhr.open('POST', '/api/markers/', false);
       xhr.setRequestHeader("Content-type", "application/json");
       xhr.send(JSON.stringify(data));
@@ -2010,8 +2009,6 @@ __webpack_require__.r(__webpack_exports__);
         var response = JSON.parse(xhr.response);
 
         if (markerPhoto.files.length > 0) {
-          console.log(response.id, response.owner_id);
-
           var _xhr = new XMLHttpRequest();
 
           var formData = new FormData();
