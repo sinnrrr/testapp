@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Marker;
+use App\Photo;
+use App\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +20,13 @@ class PlaceController extends Controller
      */
     public function index($id)
     {
-        $markerData = \App\Marker::findOrFail($id);
-        $userData = \App\User::findOrFail($markerData->owner_id);
-        $photoData = \App\Photo::where('marker_id', $id)->get();
-        $commentData = \App\Comment::where('marker_id', $id)->orderBy('created_at', 'desc')->get();
+        $markerData = Marker::findOrFail($id);
+        $userData = User::findOrFail($markerData->owner_id);
+        $photoData = Photo::where('marker_id', $id)->get();
+        $commentData = Comment::where('marker_id', $id)->orderBy('created_at', 'desc')->paginate(5);
+        $commentData->withPath("/place/{$id}/");
+//        dd($commentData);
+//        $commentData = $commentPagination->items;
 
         $commentUserIDs = [];
         $commentUserData = [];

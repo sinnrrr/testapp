@@ -51,7 +51,7 @@
         @endif
     </div>
     <section class="my-5">
-        <h3>Comments: <span id="commentCounter">{{ count($commentData) }}</span></h3>
+        <h3>Comments: <span id="commentCounter">{{ $commentData->total() }}</span></h3>
         <hr>
         @if($checkAuth)
             <div class="px-5">
@@ -82,7 +82,7 @@
                 </article>
             @endforeach
         </div>
-        <div class="pagination"></div>
+        <div class="pagination">{{ $commentData->links() }}</div>
     </section>
 </div>
 <script>

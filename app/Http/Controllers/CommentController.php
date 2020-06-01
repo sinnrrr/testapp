@@ -53,6 +53,24 @@ class CommentController extends Controller
         } else {
             return response()->json((object)['message' => 'This comment has already been created by you'], 418);
         }
+//        $validatedData = $request->validate([
+//           'body' => 'string|max:255|unique:comments',
+//           'owner_id' => 'numeric|unique:users',
+//           'marker_id' => 'numeric|unique:markers'
+//        ]);
+//
+//        $comment = new Comment();
+//
+//        $comment->owner_id = $validatedData->owner_id;
+//        $comment->marker_id = $validatedData->marker_id;
+//        $comment->body = $validatedData->body;
+//
+//        if ($comment->save()) {
+//            $comment->message = 'Comment successfully created';
+//            return response()->json(new CommentResource($comment));
+//        } else {
+//            abort(500);
+//        }
     }
 
     /**
