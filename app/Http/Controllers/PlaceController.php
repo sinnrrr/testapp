@@ -25,8 +25,6 @@ class PlaceController extends Controller
         $photoData = Photo::where('marker_id', $id)->get();
         $commentData = Comment::where('marker_id', $id)->orderBy('created_at', 'desc')->paginate(5);
         $commentData->withPath("/place/{$id}/");
-//        dd($commentData);
-//        $commentData = $commentPagination->items;
 
         $commentUserIDs = [];
         $commentUserData = [];

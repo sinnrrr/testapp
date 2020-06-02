@@ -89,16 +89,21 @@
 
                 // preparing data to transfer
                 const data = {
+                    owner_id: this.marker.owner_id,
+                    lat: this.marker.lat,
+                    lng: this.marker.lng,
                     title: this.marker.title,
                     description: this.marker.description,
                 }
 
                 xhr.open('PUT', `/api/markers/${this.marker.id}`, false);
-                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Accept", "application/json");
                 xhr.send(JSON.stringify(data));
 
                 if (xhr.status !== 200) {
                     alert(`${xhr.status}: ${xhr.statusText}`);
+                    console.log(xhr.response);
                 } else {
                     let popup = document.getElementById('popup');
                     let notify = document.getElementById('notify');

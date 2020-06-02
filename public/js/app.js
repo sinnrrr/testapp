@@ -1993,7 +1993,8 @@ __webpack_require__.r(__webpack_exports__);
         description: this.marker.description
       };
       xhr.open('POST', '/api/markers/', false);
-      xhr.setRequestHeader("Content-type", "application/json");
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
       xhr.send(JSON.stringify(data));
 
       if (xhr.status !== 200) {
@@ -2151,15 +2152,20 @@ __webpack_require__.r(__webpack_exports__);
       var xhr = new XMLHttpRequest(); // preparing data to transfer
 
       var data = {
+        owner_id: this.marker.owner_id,
+        lat: this.marker.lat,
+        lng: this.marker.lng,
         title: this.marker.title,
         description: this.marker.description
       };
       xhr.open('PUT', "/api/markers/".concat(this.marker.id), false);
-      xhr.setRequestHeader("Content-type", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Accept", "application/json");
       xhr.send(JSON.stringify(data));
 
       if (xhr.status !== 200) {
         alert("".concat(xhr.status, ": ").concat(xhr.statusText));
+        console.log(xhr.response);
       } else {
         var removePopup = function removePopup() {
           popup.className = 'hide';

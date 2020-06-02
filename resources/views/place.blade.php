@@ -86,6 +86,20 @@
     </section>
 </div>
 <script>
+    function removePopup() {
+        popup.className = 'remove';
+    }
+
+    function displayPopup(message) {
+        // setting notify text
+        notify.innerText = message;
+
+        // showing popup
+        popup.className = 'show';
+
+        setTimeout(removePopup, 3000);
+    }
+
     const submitButton = document.getElementById('submitButton');
     const notify = document.getElementById('notify');
     const marker_id = {{ $markerData->id }};
@@ -107,12 +121,18 @@
         // doing AJAX request to API endpoint
         xhr.open('POST', '/api/comments', false);
         xhr.setRequestHeader("Content-type", "application/json");
+        xhr.setRequestHeader("Accept", "application/json");
         xhr.send(JSON.stringify(dataForm));
+
+        let response = JSON.parse(xhr.response);
 
         // checking if got any errors
         if (xhr.status !== 200) {
             alert(`${xhr.status}: ${xhr.statusText}`);
+            displayPopup(response.message);
         } else {
+            console.log(xhr.response)
+
             const userName = "{{ $authName }}";
 
             // fetching response data
@@ -138,17 +158,7 @@
             // erasing comment field
             commentField.value = '';
 
-            // setting notify text
-            notify.innerText = response.message;
-
-            // showing popup
-            popup.className = 'show';
-
-            function removePopup() {
-                popup.className = 'remove';
-            }
-
-            setTimeout(removePopup, 3000);
+            displayPopup(response.message);
         }
     });
 </script>

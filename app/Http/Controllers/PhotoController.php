@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Photo;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\Photo as PhotoRequest;
 use App\Http\Resources\Photo as PhotoResource;
 
 class PhotoController extends Controller
@@ -22,19 +22,17 @@ class PhotoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param PhotoRequest $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store(PhotoRequest $request)
     {
+        $validatedData = $request->validated();
         $photo = new Photo();
 
-        $photo->owner_id = $request->owner_id;
-        $photo->marker_id = $request->marker_id;
-
-        if ($request->hasFile('content')) {
-            $photo->content = $request->file('content')->store('uploads', 'public');
-        }
+        $photo->owner_id = $validatedData['owner_id'];
+        $photo->marker_id = $validatedData['marker_id'];
+        $photo->content = $request->file('content')->store('uploads', 'public');
 
         if ($photo->save()) {
             $photo->message = 'Photo successfully uploaded';
@@ -63,17 +61,15 @@ class PhotoController extends Controller
      * Update the specified resource in storage.
      * Not sure if this should be in app.
      *
-     * @param Request $request
+     * @param PhotoRequest $request
      * @param $id
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(PhotoRequest $request, $id)
     {
         $photo = Photo::findOrFail($id);
 
-        if ($request->hasFile('photos')) {
-            $photo->content = $request->file('content')->store('uploads', 'public');
-        }
+        $photo->content = $request->file('content')->store('uploads', 'public');
 
         if ($photo->save()) {
             $photo->message = "Photo ID {$id} successfully updated";

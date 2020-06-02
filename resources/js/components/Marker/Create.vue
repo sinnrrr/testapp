@@ -85,7 +85,8 @@
                 }
 
                 xhr.open('POST', '/api/markers/', false);
-                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(JSON.stringify(data));
 
                 if (xhr.status !== 200) {

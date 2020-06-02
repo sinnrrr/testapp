@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Comment as CommentRequest;
 use App\Http\Resources\Comment as CommentResource;
 
 class CommentController extends Controller
@@ -23,54 +22,25 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CommentRequest $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
-        // checking if this comment was created earlier
-        $validateComments = DB::table('comments')
-            ->where([
-                'owner_id' => $request->owner_id,
-                'marker_id' => $request->marker_id,
-                'body' => $request->body
-            ])->first();
+        $validatedData = $request->validated();
+        $comment = new Comment();
 
-        // if there is no comments like that
-        if (!isset($validateComments)) {
-            $comment = new Comment();
+        $comment->owner_id = $validatedData['owner_id'];
+        $comment->marker_id = $validatedData['marker_id'];
+        $comment->body = $validatedData['body'];
 
-            $comment->owner_id = $request->owner_id;
-            $comment->marker_id = $request->marker_id;
-            $comment->body = $request->body;
+        if ($comment->save()) {
+            $comment->message = 'Comment successfully created';
 
-            if ($comment->save()) {
-                $comment->message = 'Comment successfully created';
-                return response()->json(new CommentResource($comment));
-            } else {
-                abort(500);
-            }
+            return response()->json(new CommentResource($comment));
         } else {
-            return response()->json((object)['message' => 'This comment has already been created by you'], 418);
+            abort(500);
         }
-//        $validatedData = $request->validate([
-//           'body' => 'string|max:255|unique:comments',
-//           'owner_id' => 'numeric|unique:users',
-//           'marker_id' => 'numeric|unique:markers'
-//        ]);
-//
-//        $comment = new Comment();
-//
-//        $comment->owner_id = $validatedData->owner_id;
-//        $comment->marker_id = $validatedData->marker_id;
-//        $comment->body = $validatedData->body;
-//
-//        if ($comment->save()) {
-//            $comment->message = 'Comment successfully created';
-//            return response()->json(new CommentResource($comment));
-//        } else {
-//            abort(500);
-//        }
     }
 
     /**
@@ -89,19 +59,20 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param CommentRequest $request
      * @param $id
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(CommentRequest $request, $id)
     {
         $comment = Comment::findOrFail($id);
 
-        $comment->body = $request->body;
-
+        $validatedData = $request->validated();
+        $comment->body = $validatedData['body'];
 
         if ($comment->save()) {
             $comment->message = "Comment ID {$id} successfully updated";
+
             return response()->json(new CommentResource($comment));
         } else {
             abort(500);

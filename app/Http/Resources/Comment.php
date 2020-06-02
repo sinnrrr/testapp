@@ -18,7 +18,6 @@ class Comment extends JsonResource
         return [
             'id' => $this->id,
             'body' => $this->body,
-            'title' => $this->title,
             'message' => $this->message,
             'created_at' => $this->created_at
         ];

@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Marker;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Marker as MarkerRequest;
 use App\Http\Resources\Marker as MarkerResource;
 
 class MarkerController extends Controller
@@ -26,38 +25,26 @@ class MarkerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param MarkerRequest $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store(MarkerRequest $request)
     {
-        // checking if this marker was created earlier
-        $validateMarker = DB::table('markers')
-            ->where([
-                'owner_id' => $request->owner_id,
-                'lat' => $request->lat,
-                'lng' => $request->lng
-            ])->first();
+        $validatedData = $request->validated();
+        $marker = new Marker();
 
-        // if there is no markers like that
-        if (!isset($validateMarker)) {
-            $marker = new Marker();
+        $marker->owner_id = $validatedData['owner_id'];
+        $marker->lat = $validatedData['lat'];
+        $marker->lng = $validatedData['lng'];
+        $marker->title = $validatedData['title'];
+        $marker->description = $validatedData['description'];
 
-            $marker->owner_id = $request->owner_id;
-            $marker->lat = $request->lat;
-            $marker->lng = $request->lng;
-            $marker->title = $request->title;
-            $marker->description = $request->description;
+        if ($marker->save()) {
+            $marker->message = 'Marker successfully created';
 
-            if ($marker->save()) {
-                $marker->message = 'Marker successfully created';
-
-                return response()->json(new MarkerResource($marker));
-            } else {
-                abort(500);
-            }
+            return response()->json(new MarkerResource($marker));
         } else {
-            return response()->json((object)['message' => 'This marker has already been created by you'], 418);
+            abort(500);
         }
     }
 
@@ -77,16 +64,18 @@ class MarkerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param MarkerRequest $request
      * @param $id
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(MarkerRequest $request, $id)
     {
         $marker = Marker::findOrFail($id);
 
-        $marker->title = $request->title;
-        $marker->description = $request->description;
+        $validatedData = $request->validated();
+
+        $marker->title = $validatedData['title'];
+        $marker->description = $validatedData['description'];
 
         if ($marker->save()) {
             $marker->message = "Marker ID {$id} successfully updated";
